@@ -1,0 +1,24 @@
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+.section{
+    width: calc( ( 405px * 4 ));
+    margin: auto;
+    padding: 3em 0;
+}
+.items{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 100%;
+    max-height: 1500px;
+    margin: auto;
+}
+
+.items img{
+    transition: .8s opacity;
+}
+
+.items:hover img { opacity: 0.3; }
+.items:hover img:hover { opacity: 1; } 
