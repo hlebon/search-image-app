@@ -10,12 +10,15 @@ const nunsplash = new unsplash({
 })
 
 export function fecthImages(){
-    return nunsplash.photos.listPhotos(2,15, "lastest")
+    return nunsplash.photos.listPhotos(2,10, "lastest")
     .then(data => data.json())
+    .catch(data => data.json())
 }
 
 export function searchPhoto(photo = ""){
+    console.log(photo);
     photo = photo.trim().toLowerCase();
     return nunsplash.search.photos(photo, 1)
-        .then(data => data.json())
+    .then(data => data.json())
+    .catch(data => data)
 }

@@ -5,10 +5,10 @@ import '../styles/grid.css'
 
 class Home extends React.Component{
     state = {
-        images: []
+        images: null
     }
 
-    buscarImg = () => {
+    componentDidMount(){
         ImageAPI.fecthImages().then((images) => {
             this.setState({
                 images
@@ -17,8 +17,15 @@ class Home extends React.Component{
     }
     
     onSearchImage = (query) => {
-        this.buscarImg()
-        console.table(this.state.image)
+        this.setState({
+            images: null
+        })
+        ImageAPI.searchPhoto(query).then((images) => {
+            this.setState({
+                images: images.results
+            })
+        })
+        console.table(this.state.images)
     }
 
     render(){
@@ -31,13 +38,26 @@ class Home extends React.Component{
                 />
                 <section className={"section"}>
                     <div className={"items"}>
-                        { images.map((image) => {
+                    { images ? images.map((image) => 
+                        {
                             return (
                                 <div key={image.id} className={"item"}>{
-                                    <img src={image.urls.small} alt=""/>
+                                    <div>
+                                        <img src={image.urls.small} alt=""/>
+                                    </div>
                                 }</div>
                             )
-                        }) }
+                        })
+                    :   <div className="loader-container">
+                            <div className="loader">
+                                <div className="loading-box">
+                                    <div className="loading-inner-box">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                        
                     </div>
                 </section>
             </div>

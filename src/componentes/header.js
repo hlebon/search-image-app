@@ -15,6 +15,9 @@ class Header extends React.Component{
     handleOnSubmit = (event) => {
         event.preventDefault();
         this.props.searchImages(this.state.query)
+        this.setState({
+            query: ""
+        })
     }
 
     render(){
@@ -22,7 +25,7 @@ class Header extends React.Component{
             <header className="App-header">
                 <form onSubmit={this.handleOnSubmit}>
                     <h1 className="App-title">Welcome to Search Image App</h1>
-                    <h4>Beatiful Photos by Unsplash</h4>
+                    <h4>Beautiful Photos by <span className={"unsplash"}>Unsplash</span></h4>
                     <input type="text" val={this.state.query} onChange={this.handleOnChange}/>
                     <input type="submit" value="Buscar"/>
                 </form>
