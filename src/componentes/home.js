@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './header'
 import * as ImageAPI from '../helps/api'
 import '../styles/grid.css'
+import logo from '../img/love.svg';
 
 class Home extends React.Component{
     state = {
@@ -44,7 +45,12 @@ class Home extends React.Component{
                                 <div key={image.id} className={"item"}>{
                                     <div>
                                         <img src={image.urls.small} alt=""/>
+                                        <div className={"item-info"}>
+                                            <small>Author: <span>{image.user.name}</span></small>
+                                            <div> <img src={logo} className={"heart"} alt=""/><span>{image.user.total_likes}</span></div>
+                                        </div>
                                     </div>
+                                    
                                 }</div>
                             )
                         })

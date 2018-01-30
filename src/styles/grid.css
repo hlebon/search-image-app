@@ -23,6 +23,25 @@
 .items:hover img { opacity: 0.3; }
 .items:hover img:hover { opacity: 1; } 
 
+
+.item-info{
+    width: 100%;
+    background-color: rgba(239, 236, 235, 0.47);
+    color: #000000;
+    transform: translateY(-40px);
+    opacity: 0;
+    transition: .8s opacity;
+}
+
+img:hover + .item-info {
+    opacity: 1;
+}
+
+.item{
+    margin-right: 5px;
+    max-height: 270px;
+}
+
 .loader-container{
     position: absolute;
         top: 0;
@@ -37,7 +56,6 @@
     align-items: center;
     transition: cubic-bezier(0.075, 0.82, 0.165, 1);
 }
-
   
 .loading-box{
     margin: auto;
@@ -92,6 +110,11 @@
     }
 
     .items{
-        max-height: 3000px;
+        max-height: 2000px;
     }
+}
+
+.heart{
+    width: 15px;
+    height: auto;
 }
