@@ -3,6 +3,7 @@
 }
 
 .section{
+    display: flex;
     width: 100%;/*calc( ( 405px * 4 ));*/
     margin: auto;
     padding: 3em 0;
@@ -23,7 +24,6 @@
 .items:hover img { opacity: 0.3; }
 .items:hover img:hover { opacity: 1; } 
 
-
 .item-info{
     width: 100%;
     background-color: rgba(239, 236, 235, 0.47);
@@ -33,13 +33,13 @@
     transition: .8s opacity;
 }
 
+
 img:hover + .item-info {
     opacity: 1;
 }
 
 .item{
     margin-right: 5px;
-    max-height: 270px;
 }
 
 .loader-container{
