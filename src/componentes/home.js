@@ -5,7 +5,6 @@ import '../styles/grid.css'
 import logo from '../img/love.svg';
 
 function splitArrayByN (array, n) {
-
     array.map( x => {
         return x;
     })
@@ -17,7 +16,6 @@ function splitArrayByN (array, n) {
         start = end
         end = end + n
     }
-
     return results
 }
 
@@ -52,43 +50,38 @@ class Home extends React.Component{
         if(images){
             [ images1, images2 ] = splitArrayByN(images, 5)
         }
-        
-        
-
-
-        console.table(images)
         return (
             <div>
                 <Header 
                     searchImages={this.onSearchImage}
                 />
                 <section className={"section"}>
-                    <div className={"items1"}>
+                    <div className={"items items1"}>
                     { images &&
                     images1.map( image => {
                         return (
                             <div key={image.id} className={"item"}>
-                                <div>
-                                    <img src={image.urls.small} alt=""/>
-                                    <div className={"item-info"}>
-                                        <small>Author: <span>{image.user.name}</span></small>
-                                        <div>
-                                            <img src={logo} className={"heart"} alt=""/>
-                                            <span>{image.user.total_likes}</span>
-                                        </div>
+                                <img src={image.urls.small} alt=""/>
+                                <div className={"item-info"}>
+                                    <small>Author: <span>{image.user.name}</span></small>
+                                    <div>
+                                        <img src={logo} className={"heart"} alt=""/>
+                                        <span>{image.user.total_likes}</span>
                                     </div>
                                 </div>
                             </div>
                         );
                     })}    
                     </div>
-                    <div className={"items2"}>
+                    <div className={"items items2"}>
                     { images &&
                     images2.map( image => {
                         return (
                             <div key={image.id} className={"item"}>
                                 <div>
-                                    <img src={image.urls.small} alt=""/>
+                                    <div>
+                                        <img src={image.urls.small} alt=""/>
+                                    </div>
                                     <div className={"item-info"}>
                                         <small>Author: <span>{image.user.name}</span></small>
                                         <div>
@@ -101,6 +94,15 @@ class Home extends React.Component{
                         );
                     })}    
                     </div>
+                    {
+                        !images && 
+                        <div className="loader-container">
+                            <div className="loading-box">
+                                <div className="loading-inner-box">
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </section>
             </div>
         )
