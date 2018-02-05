@@ -3,16 +3,23 @@
 }
 
 img{
+    display: block;
     width: 100%;
     height: auto;
 }
 
 .section{
     display: flex;
+    flex-wrap: wrap;
     width: 100%;
     margin: auto;
     padding: 3em 0;
 }
+
+.section-info-bar{
+    width: 100%;
+}
+
 .items{
     width: 100%;
     max-height: auto;
@@ -109,6 +116,7 @@ img{
     }
 
     .items{
+        max-width: 405px;
         max-height: 2000px;
     }
 }

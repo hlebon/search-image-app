@@ -7,7 +7,6 @@ class Header extends React.Component{
 
     handleOnChange = (event) => {
         const query = event.target.value
-        console.log(query.length, (query) ? "full" : "empty")
         this.setState({
             query
         })
@@ -15,13 +14,12 @@ class Header extends React.Component{
     
     handleOnSubmit = (event) => {
         event.preventDefault()
+        event.target.reset()
         this.props.searchImages(this.state.query)
-        this.setState({
-            query: ""
-        })
     }
 
     render(){
+        console.log(this.state.query)
         return (
             <header className="App-header">
                 <form onSubmit={this.handleOnSubmit}>
