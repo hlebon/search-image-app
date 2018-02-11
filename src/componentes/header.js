@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Header extends React.Component{
     state = {
@@ -31,6 +32,10 @@ class Header extends React.Component{
             </header>
         )
     }
+}
+
+Header.propTypes = {
+    searchImages: PropTypes.func.isRequired
 }
 
 export default Header

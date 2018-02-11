@@ -31,7 +31,7 @@ class Home extends React.Component{
         images: [],
         loading: false,
         hasError: false,
-        filterBy: ""
+        filterBy: null
     }
 
     componentDidMount(){
@@ -63,13 +63,15 @@ class Home extends React.Component{
         ImageAPI.searchPhoto(query).then((images) => {
                 this.setState({
                     images: images.results,
-                    loading: false
+                    loading: false,
+                    filterBy: query
                 })
         })
     }
 
     render(){
         const images = splitArrayByN(this.state.images)
+        console.table(images)
         return (
             <div>
                 <Header 
@@ -77,7 +79,10 @@ class Home extends React.Component{
                 />
                 <section className={"section"}>
                     <div className="section-info-bar">
-                        <p>Filter: {this.state.filterBy}</p>
+                        {
+                            this.state.filterBy && 
+                            <p>Filter: {this.state.filterBy}</p>
+                        }
                     </div>
 
                     {   this.state.loading && 
@@ -93,14 +98,13 @@ class Home extends React.Component{
                                     <img src={value.urls.small} alt=""/>
                                     <div className={"item-info"}>
                                         <div>
-                                            <small>Author: <span>{value.user.name}</span></small>
-                                        </div>
-                                        <div>
-                                            <a href={value.urls.full} download onClick={(e) => this.onDownloadImage(value.id, e)}>download</a>
-                                        </div>
-                                        <div>
-                                            <p>See on unsplash: </p>
-                                            <span>{value.user.total_likes}</span>
+                                            <div>{value.user.name}</div>
+                                            <div>
+                                                See on <a href={value.user.links.html}>unsplash</a>
+                                            </div>
+                                            <div>
+                                                <a href={value.urls.full} download onClick={(e) => this.onDownloadImage(value.id)}>download</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
