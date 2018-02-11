@@ -2,7 +2,6 @@ import React from 'react';
 import Header from './header'
 import * as ImageAPI from '../helps/api'
 import '../styles/grid.css'
-import logo from '../img/love.svg';
 
 function splitArrayByN (array) {
     if(array.length >= 2){
@@ -37,6 +36,7 @@ class Home extends React.Component{
 
     componentDidMount(){
         ImageAPI.fecthImages().then((images) => {
+            console.log(images)
             this.setState({
                 images
             })
@@ -49,8 +49,11 @@ class Home extends React.Component{
         })
     }
 
-    onDownloadImage = (object) => {
-        
+    onDownloadImage = (id, event) => {
+        console.log(event)
+        ImageAPI.getPhoto(id).then(data => {
+            console.log(data)
+        })
     }
     
     onSearchImage = (query) => {
@@ -89,10 +92,14 @@ class Home extends React.Component{
                                 <div key={value.id} className={"item"}>
                                     <img src={value.urls.small} alt=""/>
                                     <div className={"item-info"}>
-                                        <small>Author: <span>{value.user.name}</span></small>
-                                        <button>download</button>
                                         <div>
-                                            <img src={logo} className={"heart"} alt=""/>
+                                            <small>Author: <span>{value.user.name}</span></small>
+                                        </div>
+                                        <div>
+                                            <a href={value.urls.full} download onClick={(e) => this.onDownloadImage(value.id, e)}>download</a>
+                                        </div>
+                                        <div>
+                                            <p>See on unsplash: </p>
                                             <span>{value.user.total_likes}</span>
                                         </div>
                                     </div>
