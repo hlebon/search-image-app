@@ -20,12 +20,11 @@ class Header extends React.Component{
     }
 
     render(){
-        console.log(this.state.query)
         return (
             <header className="App-header">
                 <form onSubmit={this.handleOnSubmit}>
                     <h1 className="App-title">Welcome to Search Image App</h1>
-                    <h4>Beautiful Photos by <span className={"unsplash"}>Unsplash</span></h4>
+                    <h3>Beautiful Photos by <span className="unsplash">Unsplash</span></h3>
                     <input type="text" val={this.state.query} onChange={this.handleOnChange} required/>
                     <input type="submit" value="Buscar"/>
                 </form>

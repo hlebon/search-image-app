@@ -17,6 +17,10 @@ img{
     height: auto;
 }
 
+.App-title{
+    font-size: 2em !important;
+}
+
 .section{
     display: flex;
     flex-wrap: wrap;
@@ -100,6 +104,42 @@ img{
     width: 65px;
     animation: fill 2s infinite ease-in;
 }
+
+/* React Modal */
+.overlay {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-color: rgba(255, 255, 255, 0.75);
+  }
+  
+  .modal {
+    position: absolute;
+    top: 20px;
+    left: 50px;
+    right: 50px;
+    bottom: 20px;
+    border: 1px solid rgb(204, 204, 204);
+    background: rgb(255, 255, 255);
+    overflow: auto;
+    border-radius: 4px;
+    outline: none;
+    border-radius: 3px;
+    box-shadow: 0 3px 8px 0 rgba(0,0,0,.24), 0 3px 12px 0 rgba(0,0,0,.12);
+    min-width: 500px;
+    height: auto;
+  }
+
+  .modal-body{
+      display: flex;
+      height: 100%;
+  }
+
+  .modal-body > * {
+      padding-right: 10px;
+  }
   
 @keyframes fill{
     0%{
