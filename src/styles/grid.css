@@ -33,6 +33,11 @@ img{
     width: 100%;
 }
 
+.section-info-bar > p > span {
+    border-bottom: 1px solid gray;
+    color: gray;
+}
+
 .items{
     width: 100%;
     max-height: auto;
@@ -45,8 +50,11 @@ img{
 
 .item{
     position: relative;
-    margin: .5em;
+    margin: 2em 0.5em;
 }
+
+.item { transition: all .4s ease-in-out; }
+.item:hover { transform: scale(1.1); }
 
 .item-info{
     display: flex;
@@ -61,12 +69,48 @@ img{
     opacity: 0;
     transition: opacity .8s ease-in;
     padding: 7px;
+    font-size: 14px;
+}
+
+.item-info > div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    height: 40px;
+}
+
+.item-info > div > div > img {
+    width: 25px;
+    height: 25px;
+    margin: auto 3px;
+    border-radius: 25px;
+}
+
+.item-info > div > div > div {
+    display: inline-block;
 }
 
 .item-info > div{
     padding: 5px;
     background: #2d2f2f;
     margin: -7px;
+}
+
+.item-info > div > div:not(:last-child){
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 5px;
+    line-height: 40px;
+}
+
+.item-info > div > div:last-child{
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}
+
+.item-info > div > div > img{
+    margin: 5px;
 }
 
 .item-info:hover{
@@ -105,40 +149,18 @@ img{
     animation: fill 2s infinite ease-in;
 }
 
-/* React Modal */
-.overlay {
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    background-color: rgba(255, 255, 255, 0.75);
+.heart {
+    fill: red;
+    position: relative;
+    top: 5px;
+    width: 50px;
+    /*animation: pulse 1s infinite;*/
   }
   
-  .modal {
-    position: absolute;
-    top: 20px;
-    left: 50px;
-    right: 50px;
-    bottom: 20px;
-    border: 1px solid rgb(204, 204, 204);
-    background: rgb(255, 255, 255);
-    overflow: auto;
-    border-radius: 4px;
-    outline: none;
-    border-radius: 3px;
-    box-shadow: 0 3px 8px 0 rgba(0,0,0,.24), 0 3px 12px 0 rgba(0,0,0,.12);
-    min-width: 500px;
-    height: auto;
-  }
-
-  .modal-body{
-      display: flex;
-      height: 100%;
-  }
-
-  .modal-body > * {
-      padding-right: 10px;
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.5); }
+    100% { transform: scale(1); }
   }
   
 @keyframes fill{
@@ -183,7 +205,7 @@ img{
     }
 
     .item{
-        margin: .5em;
+        margin: 2em;
     }
 }
 

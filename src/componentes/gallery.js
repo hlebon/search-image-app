@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Modal from 'react-modal'
+import Heart from '../img/heart'
 
 function splitArrayInTwo (array) {
     if(array.length >= 2){
@@ -14,30 +14,6 @@ function splitArrayInTwo (array) {
 }
 
 class Gallery extends React.Component{
-    state = {
-        isModalOpen: false,
-        img: null
-    }
-
-    componentWillMount() {
-        Modal.setAppElement('body');
-    }
-
-    closeModal = () => {
-        this.setState({
-            isModalOpen: false
-        })
-    }
-
-    openModal = (img) => {
-        this.setState({
-            isModalOpen: true,
-            img
-        })
-
-        console.log(this.img)
-    }
-
     render(){
         const { filterBy, onDownloadImage } = this.props
         const images = splitArrayInTwo(this.props.images)
@@ -46,7 +22,7 @@ class Gallery extends React.Component{
                 <div className="section-info-bar">
                     {
                         filterBy && 
-                        <p>Filter: {filterBy}, Total de resultados: {this.props.images.length}</p>
+                        <p>Palabra clave: <span>{filterBy}</span>, Resultados: <span>{`${this.props.images.length} imagenes`}</span></p>
                     }
                 </div>
                     {
@@ -56,14 +32,20 @@ class Gallery extends React.Component{
                             { 
                                 image.map( value => {
                                 return ( 
-                                    <div key={value.id} className={"item"} onClick={() => this.openModal(value)}>
-                                        <img src={value.urls.small} alt=""/>
+                                    <div key={value.id} className={"item"}>
+                                        <img with={value.width} height={value.height} src={value.urls.small} alt=""/>
                                         <div className={"item-info"}>
                                             <div>
-                                                <div>{value.user.name}</div>
-                                                <div>See on <a href={value.user.links.html} target="_blank">unsplash</a></div>
                                                 <div>
-                                                    <a href={value.urls.full} download onClick={(e) => onDownloadImage(value.id)}>download</a>
+                                                    <img src={value.user.profile_image.small} alt="foto"/>  
+                                                    <div>{value.user.name}</div>
+                                                </div>
+                                                <div>
+                                                    <a href={value.urls.full} download onClick={(e) => onDownloadImage(value.id)}>Download</a>
+                                                </div>
+                                                <div>
+                                                    <Heart/>
+                                                    <div style={{color: value.color, marginLeft: "5px"}}>{value.likes}</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -74,29 +56,6 @@ class Gallery extends React.Component{
                             )
                         })
                     }
-                    <Modal
-                        className="modal"
-                        overlayClassName="overlay"
-                        isOpen={this.state.isModalOpen}
-                        onRequestClose={this.closeModal}
-                        contentLabel="Modal"
-                    >
-                        { this.state.isModalOpen &&
-                        <div className="modal-body">
-                            <img src={this.state.img.urls.regular} alt=""/>
-                            <div className="modal-info">
-                                <img src={this.state.img.user.profile_image.medium} alt=""/>
-                                <p>Name: {this.state.img.user.name}</p>
-                                <p>Location: {this.state.img.user.location}</p>
-                                <p>twitter: {this.state.img.user.twitter_username}</p>
-                                <p>instagram: {this.state.img.user.instagram_username}</p>
-                                <p>fotos: {this.state.img.user.total_photos}</p>
-                                <p>Likes: {this.state.img.user.total_likes}</p>
-                            </div>
-                        </div>
-                        }
-                        
-                    </Modal>
             </section>
         )
     }
