@@ -9,12 +9,12 @@
 - [Something is missing?](#something-is-missing)
 
 ## Note
-You need to install [yarn](https://yarnpkg.com/en/docs/install) before all
+You need to install yarn or npm before all
 
 ## Installing
 Installing the app and dependencies:
 clone the repo and inside the folder run
-### `yarn install`
+### `npm install`
 
 ## Launch
 Inside the project run:
