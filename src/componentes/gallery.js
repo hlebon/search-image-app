@@ -33,7 +33,7 @@ class Gallery extends React.Component{
                                 image.map( value => {
                                 return ( 
                                     <div key={value.id} className={"item"}>
-                                        <img with={value.width} height={value.height} src={value.urls.small} alt=""/>
+                                        <img src={value.urls.small} alt=""/>
                                         <div className={"item-info"}>
                                             <div>
                                                 <div>
@@ -65,6 +65,13 @@ Gallery.propTypes = {
     images: PropTypes.array.isRequired,
     filterBy: PropTypes.string,
     onDownloadImage: PropTypes.func.isRequired
+}
+
+const styles = {
+    img: {
+        width: '400px',
+        height: '250px'
+    }
 }
 
 export default Gallery

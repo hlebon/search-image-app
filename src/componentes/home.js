@@ -10,15 +10,12 @@ import '../styles/grid.css'
 const Loading = (props) => {
     return (
         <React.Fragment>
-        {
-        props.loading && 
             <div className="loader-container">
                 <div className="loading-box">
                     <div className="loading-inner-box">
                     </div>
                 </div>
             </div>
-        }
         </React.Fragment>
     )
 }
@@ -27,15 +24,26 @@ const Loading = (props) => {
 class Home extends React.Component{
     state = {
         images: [],
-        loading: false,
-        filterBy: null
+        headerImage: {},
+        loading: true,
+        filterBy: null,
+        error: false,
+        errorMessage: ""
     }
 
     componentDidMount(){
-        ImageAPI.fecthImages().then((images) => {
-            console.log(images)
+        ImageAPI.getInitialData()
+        .then(values => {
             this.setState({
-                images
+                images: values.getRandomImages,
+                headerImage: values.getRandomPhoto,
+                loading: false
+            })
+        })
+        .catch(error => {
+            this.setState({
+                error: true,
+                errorMessage: "It's not you, it's me... try later"
             })
         })
     }
@@ -43,6 +51,11 @@ class Home extends React.Component{
     onDownloadImage = (id, event) => {
         ImageAPI.getPhoto(id).then(data => {
             console.log(data)
+        }).catch(error => {
+            this.setState({
+                error: true,
+                errorMessage: "Ups! download problems."
+            })
         })
     }
     
@@ -55,19 +68,29 @@ class Home extends React.Component{
                 this.setState({
                     images: images.results,
                     loading: false,
-                    filterBy: query
+                    filterBy: query,
+                    error: false,
+                    errorMessage: ""
                 })
+        }).catch(error => {
+            console.log(error)
+            this.setState({
+                loading: false,
+                error: true,
+                errorMessage: "Cannot establish connection, try later :)"
+            })
         })
     }
 
     render(){
+        console.log("loading", this.state.loading)
+        if(this.state.loading){
+            return <Loading/>
+        }
         return (
             <div>
-                <Loading loading={this.state.loading}/>
-                <Header searchImages={this.onSearchImage}/>
-                <ErrorBoundary>
-                    <Gallery filterBy={this.state.filterBy} images={this.state.images} onDownloadImage={this.onDownloadImage} />
-                </ErrorBoundary>
+                <Header searchImages={this.onSearchImage} img={this.state.headerImage}/>
+                <Gallery filterBy={this.state.filterBy} images={this.state.images} onDownloadImage={this.onDownloadImage} />
             </div>
         )
     }
