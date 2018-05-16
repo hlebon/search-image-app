@@ -1,11 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import faStar from "@fortawesome/fontawesome-free-solid/faStar";
+import faHeart from "@fortawesome/fontawesome-free-solid/faHeart";
 import Heart from "../img/heart";
 
 class Gallery extends React.Component {
   render() {
     const { filterBy, onDownloadImage, images } = this.props;
-    console.table(images);
     return (
       <section className="container">
         <div className="card-columns">
@@ -38,10 +40,15 @@ class Gallery extends React.Component {
                       </a>
                     </div>
                     <div className="ml-auto p1 d-flex flex-row">
+                      <div className="p-1">
+                        <FontAwesomeIcon icon={faStar} />
+                      </div>
                       <div className="p-1 text-muted">
                         <small className="text-muted">{image.likes}</small>
                       </div>
-                      <Heart />
+                      <div className="p-1">
+                        <FontAwesomeIcon icon={faHeart} />
+                      </div>
                     </div>
                   </div>
                 </div>

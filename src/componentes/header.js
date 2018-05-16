@@ -1,6 +1,33 @@
 import React from "react";
 import PropTypes from "prop-types";
+import glamorous from "glamorous";
 import * as ImageAPI from "../help/api";
+
+const Hero = glamorous("header", { propsAreCssOverrides: true })({
+  alignItems: "center",
+  backgroundColor: "#333",
+  display: "flex",
+  fontSize: "18px",
+  height: "100vh",
+  justifyContent: "center",
+  overflow: "hidden",
+  perspective: "100px",
+  position: "relative",
+  textAlign: "center",
+  transformStyle: "preserve-3d",
+  "&::before": {
+    background:
+      "linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,.8)),url(https://cssanimation.rocks/levelup/public/images/background.jpg) no-repeat bottom",
+    backgroundSize: "cover",
+    content: "",
+    position: "absolute",
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    zIndex: -1
+  }
+});
 
 class Header extends React.Component {
   state = {
@@ -23,68 +50,26 @@ class Header extends React.Component {
   render() {
     console.log(this.props.img);
     return (
-      <header>
-        <img
-          src={
-            this.props.img.urls
-              ? this.props.img.urls.regular
-              : "https://fakeimg.pl/2000x1600/?text=Error"
-          }
-          alt="hero"
-          style={styles.hero}
-        />
-        <div style={styles.containerForm}>
-          <form
-            onSubmit={this.handleOnSubmit}
-            style={{
-              color: `white`,
-              textShadow: `0 1px 0 ${this.props.img.color}`
-            }}
-          >
-            <h1>Welcome to Search Image App</h1>
-            <h3>
-              Beautiful Photos by <span>Unsplash</span>
-            </h3>
-            <input
-              type="text"
-              val={this.state.query}
-              onChange={this.handleOnChange}
-              required
-            />
-            <input type="submit" value="Buscar" />
+      <Hero>
+        <div style={{ width: "600px" }}>
+          <form>
+            <div className="form-group">
+              <label>Buscar</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="naturaleza, verano, mascotas.. "
+              />
+            </div>
           </form>
         </div>
-      </header>
+      </Hero>
     );
   }
 }
 
 Header.propTypes = {
   searchImages: PropTypes.func.isRequired
-};
-
-const styles = {
-  hero: {
-    objectFit: "cover",
-    height: "100vh",
-    transformOrigin: "0 0",
-    transformStyle: "preserve-3d",
-    perspective: "100px",
-    background: "linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,.8))"
-  },
-  containerForm: {
-    position: "absolute",
-    top: 0,
-    width: "100%",
-    height: "100%",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center"
-  },
-  form: {
-    width: "50%",
-    margin: "auto"
-  }
 };
 
 export default Header;
