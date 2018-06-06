@@ -9,7 +9,7 @@ class Gallery extends React.Component {
   render() {
     const { filterBy, onDownloadImage, images } = this.props;
     return (
-      <section className="container">
+      <section id="gallery" className="container">
         <div className="card-columns">
           {images.map((image, index) => {
             return (

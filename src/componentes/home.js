@@ -25,26 +25,53 @@ class Home extends React.Component {
     error: false
   };
 
+  intervalId;
+
   componentDidMount() {
     this.setState({
       loading: true
     });
-
     ImageAPI.getInitialData()
       .then(values => {
-        this.setState({
-          images: values.getRandomImages,
-          headerImage: values.getRandomPhoto,
-          loading: false
-        });
+        console.log(values);
+        this.setState(
+          {
+            images: values.getRandomImages,
+            headerImage: values.getRandomPhoto,
+            loading: false
+          },
+          () => {
+            this.updateBgImage();
+          }
+        );
       })
       .catch(error => {
+        console.log(error);
         this.setState({
           loading: false,
           error: true
         });
       });
   }
+
+  componentWillMount() {
+    clearInterval(this.intervalId);
+  }
+
+  updateBgImage = () => {
+    this.intervalId = setInterval(() => {
+      ImageAPI.getRandomPhoto()
+        .then(values => {
+          console.warn(values);
+          this.setState({
+            headerImage: values
+          });
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }, 600000);
+  };
 
   onDownloadImage = (id, event) => {
     ImageAPI.getPhoto(id)
@@ -82,6 +109,7 @@ class Home extends React.Component {
     if (this.state.loading) {
       return <Loading />;
     }
+
     return (
       <div>
         <Header

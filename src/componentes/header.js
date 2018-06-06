@@ -1,9 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
-import glamorous from "glamorous";
+import styled, { keyframes } from "react-emotion";
 import * as ImageAPI from "../help/api";
 
-const Hero = glamorous("header", { propsAreCssOverrides: true })({
+const bounce = keyframes`
+0% {
+  opacity: 0;
+  transform: translateY(-4rem);
+}
+100% {
+  opacity: 1;
+  transform: none;
+}
+`;
+
+// emotion
+const Hero = styled("div")(props => ({
   alignItems: "center",
   backgroundColor: "#333",
   display: "flex",
@@ -16,18 +28,31 @@ const Hero = glamorous("header", { propsAreCssOverrides: true })({
   textAlign: "center",
   transformStyle: "preserve-3d",
   "&::before": {
-    background:
-      "linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,.8)),url(https://cssanimation.rocks/levelup/public/images/background.jpg) no-repeat bottom",
+    animation: `${bounce} 2s ease-out forwards`,
+    background: `linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,.8)),url(${
+      props.heroImage
+    }) no-repeat bottom`,
     backgroundSize: "cover",
-    content: "",
+    content: '""',
     position: "absolute",
     top: 0,
     right: 0,
     bottom: 0,
     left: 0,
     zIndex: -1
+  },
+  "&::after": {
+    background: "#F9FCFF",
+    content: '""',
+    height: "40rem",
+    left: "-5%",
+    position: "absolute",
+    right: "-5%",
+    top: "90%",
+    transformOrigin: "0 0",
+    transform: "rotateZ(-4deg)"
   }
-});
+}));
 
 class Header extends React.Component {
   state = {
@@ -48,13 +73,16 @@ class Header extends React.Component {
   };
 
   render() {
-    console.log(this.props.img);
+    const { urls, color = "white" } = this.props.img;
+    const img = urls
+      ? urls.img
+      : "https://cssanimation.rocks/levelup/public/images/background.jpg";
     return (
-      <Hero>
+      <Hero heroImage={this.props.img.urls.full}>
         <div style={{ width: "600px" }}>
           <form>
             <div className="form-group">
-              <label>Buscar</label>
+              <label style={{ color: color }}>Buscar</label>
               <input
                 type="text"
                 className="form-control"
