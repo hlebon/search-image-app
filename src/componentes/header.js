@@ -18,7 +18,7 @@ const bounce = keyframes`
 const Hero = styled("div")(props => ({
   alignItems: "center",
   backgroundColor: "#333",
-  display: "flex",
+  display: props.search ? "flex" : "none",
   fontSize: "18px",
   height: "100vh",
   justifyContent: "center",
@@ -73,21 +73,32 @@ class Header extends React.Component {
   };
 
   render() {
-    const { urls, color = "white" } = this.props.img;
-    const img = urls
-      ? urls.img
+    const { urls, color = "white", error } = this.props.img;
+    console.log(this.props);
+    const img = !error
+      ? urls.regular
       : "https://cssanimation.rocks/levelup/public/images/background.jpg";
     return (
-      <Hero heroImage={this.props.img.urls.full}>
+      <Hero heroImage={img} search={this.props.search}>
         <div style={{ width: "600px" }}>
-          <form>
+          <form onSubmit={this.handleOnSubmit}>
             <div className="form-group">
-              <label style={{ color: color }}>Buscar</label>
+              <h1 style={{ color: color, textShadow: "0 1px 2px white" }}>
+                Buscar
+              </h1>
               <input
+                value={this.state.query}
+                onChange={this.handleOnChange}
                 type="text"
                 className="form-control"
                 placeholder="naturaleza, verano, mascotas.. "
+                style={{ padding: ".775rem .85rem" }}
               />
+            </div>
+            <div className="form-group">
+              <button type="submit" className="button" disabled={error}>
+                Buscar
+              </button>
             </div>
           </form>
         </div>
@@ -96,8 +107,13 @@ class Header extends React.Component {
   }
 }
 
+Header.defaultProps = {
+  search: true
+};
+
 Header.propTypes = {
-  searchImages: PropTypes.func.isRequired
+  searchImages: PropTypes.func.isRequired,
+  search: PropTypes.bool
 };
 
 export default Header;

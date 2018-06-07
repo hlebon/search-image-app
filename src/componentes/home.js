@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "./header";
 import Gallery from "./gallery";
+import Info from "./Info";
 import * as ImageAPI from "../help/api";
 import "../styles/grid.css";
 
@@ -22,7 +23,8 @@ class Home extends React.Component {
     headerImage: {},
     loading: true,
     filterBy: null,
-    error: false
+    error: false,
+    displayHeader: true
   };
 
   intervalId;
@@ -85,24 +87,35 @@ class Home extends React.Component {
   };
 
   onSearchImage = query => {
+    console.log("onsearch");
     this.setState({
       loading: true
     });
     ImageAPI.searchPhoto(query)
       .then(images => {
+        console.log(images);
+        images.total > 0;
         this.setState({
           images: images.results,
           loading: false,
           filterBy: query,
-          error: false
+          error: false,
+          displayHeader: !(images.total > 0)
         });
       })
       .catch(error => {
+        console.log(error);
         this.setState({
           loading: false,
           error: true
         });
       });
+  };
+
+  displaySearch = () => {
+    this.setState({
+      displayHeader: true
+    });
   };
 
   render() {
@@ -113,12 +126,16 @@ class Home extends React.Component {
     return (
       <div>
         <Header
+          error={this.state.error}
           searchImages={this.onSearchImage}
           img={this.state.headerImage}
+          search={this.state.displayHeader}
         />
-        {this.state.error ? (
-          <h1>Soy yo, no tu :(</h1>
-        ) : (
+        {this.state.error && <h1>Soy yo, no tu :(</h1>}
+        {!this.state.displayHeader && (
+          <Info displaySearch={this.displaySearch} />
+        )}
+        {!this.state.error && (
           <Gallery
             filterBy={this.state.filterBy}
             images={this.state.images}
