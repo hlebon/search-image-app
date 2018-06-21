@@ -20,7 +20,7 @@ const Hero = styled("div")(props => ({
   backgroundColor: "#333",
   display: props.search ? "flex" : "none",
   fontSize: "18px",
-  height: "100vh",
+  height: "75vh",
   justifyContent: "center",
   overflow: "hidden",
   perspective: "100px",
@@ -28,8 +28,8 @@ const Hero = styled("div")(props => ({
   textAlign: "center",
   transformStyle: "preserve-3d",
   "&::before": {
-    animation: `${bounce} 2s ease-out forwards`,
-    background: `linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,.8)),url(${
+    animation: `${bounce} 4s ease-out forwards`,
+    background: `linear-gradient(to bottom, rgba(0,0,0,.5), rgba(0,0,0,.8)),url(${
       props.heroImage
     }) no-repeat bottom`,
     backgroundSize: "cover",

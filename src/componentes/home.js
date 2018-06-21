@@ -23,8 +23,7 @@ class Home extends React.Component {
     headerImage: {},
     loading: true,
     filterBy: null,
-    error: false,
-    displayHeader: true
+    error: false
   };
 
   intervalId;
@@ -35,7 +34,6 @@ class Home extends React.Component {
     });
     ImageAPI.getInitialData()
       .then(values => {
-        console.log(values);
         this.setState(
           {
             images: values.getRandomImages,
@@ -56,7 +54,7 @@ class Home extends React.Component {
       });
   }
 
-  componentWillMount() {
+  componentWillUnmount() {
     clearInterval(this.intervalId);
   }
 
@@ -64,7 +62,6 @@ class Home extends React.Component {
     this.intervalId = setInterval(() => {
       ImageAPI.getRandomPhoto()
         .then(values => {
-          console.warn(values);
           this.setState({
             headerImage: values
           });
@@ -72,7 +69,7 @@ class Home extends React.Component {
         .catch(e => {
           console.log(e);
         });
-    }, 600000);
+    }, 10000);
   };
 
   onDownloadImage = (id, event) => {
@@ -87,20 +84,16 @@ class Home extends React.Component {
   };
 
   onSearchImage = query => {
-    console.log("onsearch");
     this.setState({
       loading: true
     });
     ImageAPI.searchPhoto(query)
       .then(images => {
-        console.log(images);
         images.total > 0;
         this.setState({
           images: images.results,
           loading: false,
-          filterBy: query,
-          error: false,
-          displayHeader: !(images.total > 0)
+          filterBy: query
         });
       })
       .catch(error => {
@@ -110,12 +103,6 @@ class Home extends React.Component {
           error: true
         });
       });
-  };
-
-  displaySearch = () => {
-    this.setState({
-      displayHeader: true
-    });
   };
 
   render() {
@@ -132,9 +119,6 @@ class Home extends React.Component {
           search={this.state.displayHeader}
         />
         {this.state.error && <h1>Soy yo, no tu :(</h1>}
-        {!this.state.displayHeader && (
-          <Info displaySearch={this.displaySearch} />
-        )}
         {!this.state.error && (
           <Gallery
             filterBy={this.state.filterBy}
