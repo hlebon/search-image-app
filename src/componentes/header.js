@@ -69,13 +69,12 @@ class Header extends React.Component {
   handleOnSubmit = event => {
     event.preventDefault();
     event.target.reset();
-    this.props.searchImages(this.state.query);
+    this.props.onSearchImages(this.state.query);
   };
 
   render() {
-    const { urls, color = "white", error } = this.props.img;
-    console.log(this.props);
-    const img = !error
+    const { urls } = this.props.img;
+    const img = urls
       ? urls.regular
       : "https://cssanimation.rocks/levelup/public/images/background.jpg";
     return (
@@ -83,7 +82,7 @@ class Header extends React.Component {
         <div style={{ width: "600px" }}>
           <form onSubmit={this.handleOnSubmit}>
             <div className="form-group">
-              <h1 style={{ color: color, textShadow: "0 1px 2px white" }}>
+              <h1 style={{ color: "white", textShadow: "0 1px 2px white" }}>
                 Buscar
               </h1>
               <input
@@ -96,7 +95,7 @@ class Header extends React.Component {
               />
             </div>
             <div className="form-group">
-              <button type="submit" className="button" disabled={error}>
+              <button type="submit" className="button">
                 Buscar
               </button>
             </div>
@@ -112,7 +111,7 @@ Header.defaultProps = {
 };
 
 Header.propTypes = {
-  searchImages: PropTypes.func.isRequired,
+  onSearchImages: PropTypes.func.isRequired,
   search: PropTypes.bool
 };
 

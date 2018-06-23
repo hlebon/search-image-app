@@ -22,6 +22,7 @@ class Home extends React.Component {
     images: [],
     headerImage: {},
     loading: true,
+    loadingGallery: false,
     filterBy: null,
     error: false
   };
@@ -69,7 +70,7 @@ class Home extends React.Component {
         .catch(e => {
           console.log(e);
         });
-    }, 10000);
+    }, 6000000);
   };
 
   onDownloadImage = (id, event) => {
@@ -85,47 +86,42 @@ class Home extends React.Component {
 
   onSearchImage = query => {
     this.setState({
-      loading: true
+      loadingGallery: true
     });
     ImageAPI.searchPhoto(query)
       .then(images => {
         images.total > 0;
         this.setState({
           images: images.results,
-          loading: false,
+          loadingGallery: false,
           filterBy: query
         });
       })
       .catch(error => {
         console.log(error);
         this.setState({
-          loading: false,
+          loadingGallery: false,
           error: true
         });
       });
   };
 
   render() {
-    if (this.state.loading) {
-      return <Loading />;
-    }
-
+    if (this.state.loading) return <Loading />;
     return (
       <div>
         <Header
-          error={this.state.error}
-          searchImages={this.onSearchImage}
+          onSearchImages={this.onSearchImage}
           img={this.state.headerImage}
           search={this.state.displayHeader}
         />
-        {this.state.error && <h1>Soy yo, no tu :(</h1>}
-        {!this.state.error && (
-          <Gallery
-            filterBy={this.state.filterBy}
-            images={this.state.images}
-            onDownloadImage={this.onDownloadImage}
-          />
-        )}
+        <Gallery
+          loading={this.state.loadingGallery}
+          error={this.state.error}
+          filterBy={this.state.filterBy}
+          images={this.state.images}
+          onDownloadImage={this.onDownloadImage}
+        />
       </div>
     );
   }
