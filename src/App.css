@@ -19,3 +19,22 @@
 .unsplash {
   color: green;
 }
+
+.onload {
+  animation: show-on-load 1s 0.5s cubic-bezier(0, 1.6, 0.6, 1) forwards;
+}
+
+.loading {
+  opacity: 0 !important;
+}
+
+@keyframes show-on-load {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
