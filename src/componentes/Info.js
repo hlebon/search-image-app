@@ -1,25 +1,22 @@
 import React, { Component } from "react";
-
+import FilterLink from "./FilterLink";
 class Info extends Component {
-  state = {};
-
   render() {
+    const { onListPhotos, filters, filterBy } = this.props;
     return (
-      <div
-        className="p-3 mb-2 text-white d-flex flex-row"
-        style={{ backgroundColor: "#3f51b5" }}
-      >
-        <div className="container d-flex flex-row">
-          <div>
-            <button
-              onClick={this.props.displaySearch}
-              type="button"
-              className="btn btn-outline-light"
+      <div className="container d-flex p-3 mb-2">
+        {filters.map((filter, index) => {
+          const selected = filter.trim() === filterBy;
+          return (
+            <FilterLink
+              selected={selected}
+              key={index}
+              makeRequest={() => onListPhotos({ orderBy: filter })}
             >
-              Nueva Busqueda
-            </button>
-          </div>
-        </div>
+              {filter}
+            </FilterLink>
+          );
+        })}
       </div>
     );
   }

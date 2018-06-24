@@ -38,40 +38,22 @@ class Home extends React.Component {
         this.setState(
           {
             images: values.getRandomImages,
-            headerImage: values.getRandomPhoto,
-            loading: false
+            headerImage: values.getRandomPhoto
           },
           () => {
-            this.updateBgImage();
+            this.setState({
+              loading: false
+            });
           }
         );
       })
       .catch(error => {
-        console.log(error);
         this.setState({
           loading: false,
           error: true
         });
       });
   }
-
-  componentWillUnmount() {
-    clearInterval(this.intervalId);
-  }
-
-  updateBgImage = () => {
-    this.intervalId = setInterval(() => {
-      ImageAPI.getRandomPhoto()
-        .then(values => {
-          this.setState({
-            headerImage: values
-          });
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    }, 6000000);
-  };
 
   onDownloadImage = (id, event) => {
     ImageAPI.getPhoto(id)
@@ -90,15 +72,19 @@ class Home extends React.Component {
     });
     ImageAPI.searchPhoto(query)
       .then(images => {
-        images.total > 0;
-        this.setState({
-          images: images.results,
-          loadingGallery: false,
-          filterBy: query
-        });
+        this.setState(
+          {
+            images: images.results,
+            filterBy: query
+          },
+          () => {
+            this.setState({
+              loadingGallery: false
+            });
+          }
+        );
       })
       .catch(error => {
-        console.log(error);
         this.setState({
           loadingGallery: false,
           error: true
@@ -106,8 +92,31 @@ class Home extends React.Component {
       });
   };
 
+  onListPhotos = async parameters => {
+    this.setState({
+      loadingGallery: true,
+      filterBy: parameters.orderBy
+    });
+    try {
+      const images = await ImageAPI.fecthImages(parameters);
+      this.setState(
+        {
+          images
+        },
+        () => {
+          this.setState({
+            loadingGallery: false
+          });
+        }
+      );
+    } catch (error) {
+      console.warn(error);
+    }
+  };
+
   render() {
     if (this.state.loading) return <Loading />;
+    const filters = ["popular", "oldest", "lastest"];
     return (
       <div>
         <Header
@@ -115,10 +124,14 @@ class Home extends React.Component {
           img={this.state.headerImage}
           search={this.state.displayHeader}
         />
+        <Info
+          onListPhotos={this.onListPhotos}
+          filterBy={this.state.filterBy}
+          filters={filters}
+        />
         <Gallery
           loading={this.state.loadingGallery}
           error={this.state.error}
-          filterBy={this.state.filterBy}
           images={this.state.images}
           onDownloadImage={this.onDownloadImage}
         />

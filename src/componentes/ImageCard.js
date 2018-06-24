@@ -1,4 +1,6 @@
 import React from "react";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import faDownload from "@fortawesome/fontawesome-free-solid/faDownload";
 
 class ImageCard extends React.Component {
   state = {

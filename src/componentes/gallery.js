@@ -20,10 +20,10 @@ const Loading = props => {
 class Gallery extends React.Component {
   render() {
     const { filterBy, onDownloadImage, images, error, loading } = this.props;
-    if (loading) return <Loading />;
     if (error) return <h1>Ups! hemos tenido un error!</h1>;
     return (
       <section id="gallery" className="container">
+        {loading && <Loading />}
         {!images.length && <h1>Ups!, Intentalo de nuevo</h1>}
         {images.length > 0 && (
           <div className="card-columns">
@@ -55,6 +55,8 @@ class Gallery extends React.Component {
 }
 
 Gallery.propTypes = {
+  loading: PropTypes.bool,
+  error: PropTypes.bool,
   images: PropTypes.array.isRequired,
   filterBy: PropTypes.string,
   onDownloadImage: PropTypes.func.isRequired

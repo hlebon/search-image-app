@@ -18,7 +18,7 @@ const bounce = keyframes`
 const Hero = styled("div")(props => ({
   alignItems: "center",
   backgroundColor: "#333",
-  display: props.search ? "flex" : "none",
+  display: "flex",
   fontSize: "18px",
   height: "75vh",
   justifyContent: "center",
@@ -70,6 +70,9 @@ class Header extends React.Component {
     event.preventDefault();
     event.target.reset();
     this.props.onSearchImages(this.state.query);
+    this.setState({
+      query: ""
+    });
   };
 
   render() {
@@ -112,7 +115,7 @@ Header.defaultProps = {
 
 Header.propTypes = {
   onSearchImages: PropTypes.func.isRequired,
-  search: PropTypes.bool
+  img: PropTypes.object.isRequired
 };
 
 export default Header;

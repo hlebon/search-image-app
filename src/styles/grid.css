@@ -55,7 +55,7 @@ img {
   transition: all 0.4s ease-in-out;
 }
 .item:hover {
-  transform: scale(1.1);
+  transform: scale(5);
 }
 
 .item-info {
@@ -255,4 +255,52 @@ img {
   opacity: 0.9;
   color: white;
   text-decoration: none;
+}
+
+/* card */
+.onload {
+  transition: box-shadow 0.6s ease-in-out;
+  animation: show-on-load 1s 0.5s cubic-bezier(0, 1.6, 0.6, 1) forwards;
+}
+
+.onload:hover {
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.2);
+}
+
+.onload:hover > .downloadIcon {
+  opacity: 1;
+}
+
+.loading {
+  opacity: 0 !important;
+}
+
+@keyframes show-on-load {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.link {
+  margin-right: 0.7em;
+  text-decoration-line: underline;
+  color: gray;
+}
+
+.downloadIcon {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  opacity: 0;
+  transition: all 0.2s ease-in-out;
+}
+
+.downloadIcon:hover > svg {
+  color: #6362c2;
+  cursor: pointer;
 }
